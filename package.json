@@ -1,5 +1,5 @@
 {
-  "name": "webpack-package",
+  "name": "@hexlet/code",
   "version": "0.1.0",
   "description": "",
   "type": "module",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hexlet-boilerplates/webpack-package.git"
+    "url": "git+https://github.com/alekseevgr/frontend-project-11.git"
   },
-  "author": "Kirill Mokevnin",
+  "author": "Alekseev Grigory",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hexlet-boilerplates/webpack-package/issues"
+    "url": "https://github.com/alekseevgr/frontend-project-11/issues"
   },
-  "homepage": "https://github.com/hexlet-boilerplates/webpack-package#readme",
+  "homepage": "https://github.com/alekseevgr/frontend-project-11#readme",
   "jest": {
     "verbose": true,
     "testEnvironmentOptions": {
