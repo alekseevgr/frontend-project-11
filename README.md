@@ -4,4 +4,4 @@
 
 ### RSS hexlet
 
-[![vercel app](https://rsshexlet-nu.vercel.app/)]
+[vercel app](https://rsshexlet-nu.vercel.app/)
