@@ -1,13 +1,40 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>RSS агрегатор</title>
   </head>
-  <body>
-    <div id="app"></div>
+  <body class="d-flex flex-column min-vh-100">
+    <header class="bg-dark text-white py-5">
+      <div class="text-center">
+        <h1 class="display-4 fw-bold">RSS агрегатор</h1>
+        <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
+        <form id="rssForm" class="row justify-content-center g-2">
+          <div class="col-md-8">
+            <input
+              type="url"
+              class="form-control"
+              id="rssInput"
+              placeholder="Ссылка RSS"
+              required
+            />
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary px-4">Добавить</button>
+          </div>
+        </form>
+      </div>
+    </header>
+
+
+    <main class="flex-grow-1 bg-white py-5">
+      <div class="container" id="content">
+
+      </div>
+    </main>
+
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
