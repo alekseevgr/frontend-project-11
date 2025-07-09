@@ -1,6 +1,9 @@
 boinstall:
 	npm ci
 
+install:
+	npm install
+
 develop:
 	npm run dev
 
