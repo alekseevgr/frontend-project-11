@@ -3,38 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/main.js"></script>
     <title>RSS агрегатор</title>
   </head>
   <body class="d-flex flex-column min-vh-100">
-    <header class="bg-dark text-white py-5">
-      <div class="text-center">
-        <h1 class="display-4 fw-bold">RSS агрегатор</h1>
-        <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
-        <form id="rssForm" class="row justify-content-center g-2">
-          <div class="col-md-8">
-            <input
-              type="url"
-              class="form-control"
-              id="rssInput"
-              placeholder="Ссылка RSS"
-              required
-            />
-          </div>
-          <div class="col-auto">
-            <button type="submit" class="btn btn-primary px-4">Добавить</button>
-          </div>
-        </form>
-      </div>
-    </header>
-
-
-    <main class="flex-grow-1 bg-white py-5">
-      <div class="container" id="content">
-
-      </div>
+    <main class="flex-grow-1">
+      <section class="container-fluid bg-dark p-5">
+        <div class="col-md-10 col-lg-8 mx-auto text-white">
+          <h1 class="display-3 mb-0">RSS агрегатор</h1>
+          <p class="lead">
+            Начните читать RSS сегодня! Это легко, это красиво.
+          </p>
+          <form action="" class="rss-form text-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-floating">
+                  <input
+                    id="url-input"
+                    autofocus=""
+                    type="text"
+                    required=""
+                    name="url"
+                    aria-label="url"
+                    class="form-control w-100"
+                    placeholder="ссылка RSS"
+                    autocomplete="off"
+                  />
+                  <label for="url-input">Ссылка RSS</label>
+                </div>
+              </div>
+              <div class="col-auto">
+                <button
+                  type="submit"
+                  aria-label="add"
+                  class="h-100 btn btn-lg btn-primary px-sm-5"
+                >
+                  Добавить
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section class="container-fluid container-xxl p-5">
+        <div class="row">
+          <div class="col-md-10 col-lg-8 order-1 mx-auto posts"></div>
+          <div
+            class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds"
+          ></div>
+        </div>
+      </section>
     </main>
-
-
-    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

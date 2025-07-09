@@ -3,15 +3,6 @@ body {
   font-family: "Segoe UI", sans-serif;
 }
 
-h2 {
-  text-align: center;
-  color: #333;
-}
-
-
-body {
-  background-color: #f8f9fa;
-}
 
 input:focus {
   box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
