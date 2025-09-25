@@ -3,7 +3,9 @@ body {
   font-family: "Segoe UI", sans-serif;
 }
 
-
+.bg-dark .text-muted {
+  color: #adb5bd !important;
+}
 input:focus {
   box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 }
