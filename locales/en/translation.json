@@ -1,0 +1,13 @@
+{
+  "form": {
+    "label": "RSS link",
+    "placeholder": "Enter RSS URL",
+    "submit": "Add",
+    "success": "RSS successfully loaded",
+    "errors": {
+      "required": "Field is required",
+      "url": "Enter a valid URL",
+      "notUnique": "This site has already been added"
+    }
+  }
+}
