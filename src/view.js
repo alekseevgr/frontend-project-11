@@ -58,8 +58,8 @@ const elements = {
   input: document.getElementById("url-input"),
   button: document.querySelector('.rss-form button[type="submit"]'),
   error: document.querySelector(".feedback"),
-  feeds: document.querySelector('.feeds'),
-  posts: document.querySelector('.posts')
+  feeds: document.querySelector(".feeds"),
+  posts: document.querySelector(".posts"),
 };
 
 function updateTexts() {
@@ -89,7 +89,7 @@ export default function app() {
 
   i18next.on("languageChanged", updateTexts);
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const url = data.get("url");
@@ -100,14 +100,19 @@ export default function app() {
     state.errors = errors;
 
     if (Object.keys(errors).length === 0) {
-      const response = await axios.get(path);
-      const contents = response.data.contents
-      const feed = parseXML(contents)
-      state.feeds.push(feed)
-
-      render(state, elements.feeds, elements.posts)
-      state.websites.push(url);
-      input.value = "";
+      axios
+        .get(path)
+        .then((response) => {
+          const contents = response.data.contents;
+          const feed = parseXML(contents);
+          state.content.push(feed); 
+          render(state, elements.feeds, elements.posts);
+          state.websites.push(url);
+          input.value = "";
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   });
 }
