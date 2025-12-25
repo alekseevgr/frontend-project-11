@@ -74,6 +74,41 @@ export default function app() {
   const form = document.querySelector(".rss-form");
   const input = document.querySelector("#url-input");
 
+  const updateRss = (url) => {
+    const path = buildPath(url);
+    axios
+      .get(path)
+      .then((response) => {
+        const contents = response.data.contents;
+        const parsedFeed = parseXML(contents);
+
+        const existingFeed = state.content.find((f) => f.url === url);
+
+        const newPosts = parsedFeed.posts.filter((post) => {
+          if (!existingFeed) return true;
+
+          return !existingFeed.posts.some((p) => p.link === post.link);
+        });
+
+        if (!existingFeed) {
+          parsedFeed.url = url;
+          state.content.push(parsedFeed);
+        } else if (newPosts.length > 0) {
+          existingFeed.posts.unshift(...newPosts);
+        }
+
+        elements.feeds.innerHTML = "";
+        elements.posts.innerHTML = "";
+        render(state, elements.feeds, elements.posts);
+        state.websites.push(url);
+        input.value = "";
+      })
+      .catch(console.error)
+      .finally(() => {
+        setTimeout(() => updateRss(url), 5000);
+      });
+  };
+
   subscribe(state, () => {
     const snap = snapshot(state);
     const textError = snap.errors.website?.message ?? null;
@@ -94,25 +129,11 @@ export default function app() {
     const data = new FormData(e.target);
     const url = data.get("url");
 
-    const path = buildPath(url);
-
     const errors = validate({ website: url }, state);
     state.errors = errors;
 
     if (Object.keys(errors).length === 0) {
-      axios
-        .get(path)
-        .then((response) => {
-          const contents = response.data.contents;
-          const feed = parseXML(contents);
-          state.content.push(feed); 
-          render(state, elements.feeds, elements.posts);
-          state.websites.push(url);
-          input.value = "";
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      updateRss(url);
     }
   });
 }
