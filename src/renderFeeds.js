@@ -45,6 +45,7 @@ const renderPosts = (content, posts) => {
   const div = document.createElement("div");
   div.classList.add("card-body");
   cardPosts.append(div);
+  
   const h2 = document.createElement("h2");
   h2.classList.add("card-title", "h4");
   h2.textContent = "Посты";

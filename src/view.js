@@ -40,7 +40,7 @@ const makeSchema = (state) =>
 const state = proxy({
   websites: [],
   errors: {},
-  formState: "valid",
+  formState: "filling", // 'success' 'invalid'
   content: [],
 });
 
@@ -102,6 +102,7 @@ export default function app() {
         render(state, elements.feeds, elements.posts);
         state.websites.push(url);
         input.value = "";
+        state.formState = "success";
       })
       .catch(console.error)
       .finally(() => {
@@ -114,9 +115,18 @@ export default function app() {
     const textError = snap.errors.website?.message ?? null;
     if (textError) {
       elements.error.textContent = textError;
+      elements.error.classList.add("text-danger");
+      elements.error.classList.add("text-success");
       elements.input.classList.add("is-invalid");
+    } else if (snap.formState === "success") {
+      elements.error.textContent = elements.error.textContent =
+        i18next.t("form.success");
+      elements.error.classList.remove("text-danger");
+      elements.error.classList.add("text-success");
+      elements.input.classList.remove("is-invalid");
     } else {
       elements.error.textContent = "";
+      elements.error.classList.remove("text-danger", "text-success");
       elements.input.classList.remove("is-invalid");
       input.focus();
     }
@@ -133,7 +143,10 @@ export default function app() {
     state.errors = errors;
 
     if (Object.keys(errors).length === 0) {
+      state.formState = "sending";
       updateRss(url);
+    } else {
+      state.formState = "invalid";
     }
   });
 }
