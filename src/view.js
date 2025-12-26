@@ -149,4 +149,21 @@ export default function app() {
       state.formState = "invalid";
     }
   });
+
+  elements.posts.addEventListener("click", (e) => {
+    if (!e.target.matches("button")) return;
+
+    const postId = e.target.dataset.id;
+    const post = state.content
+      .flatMap((f) => f.posts)
+      .find((p) => p.id === postId);
+
+    if (!post) return;
+
+    post.read = true;
+
+    document.querySelector(".modal-title").textContent = post.title;
+    document.querySelector(".modal-body").textContent = post.description;
+    document.querySelector(".full-article").href = post.link;
+  });
 }

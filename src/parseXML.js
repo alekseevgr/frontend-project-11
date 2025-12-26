@@ -28,11 +28,14 @@ export default function parseXML(xml) {
     const link = item.querySelector("link").textContent;
     const description = item.querySelector("description").textContent;
     const id = feed.id
+    const postId = uniqueId()
     const post = {
       title,
       link,
       description,
+      id: postId,
       idFeed: id,
+      read:false,
     };
 
     feed.posts.push(post);

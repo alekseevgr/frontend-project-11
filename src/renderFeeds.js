@@ -16,7 +16,6 @@ const renderFeeds = (content, feeds) => {
   cardFeeds.append(ul);
 
   content.forEach((element) => {
-    console.log(element)
     const { titleFeed, descFeed, id } = element;
 
     const li = document.createElement("li");
@@ -45,7 +44,7 @@ const renderPosts = (content, posts) => {
   const div = document.createElement("div");
   div.classList.add("card-body");
   cardPosts.append(div);
-  
+
   const h2 = document.createElement("h2");
   h2.classList.add("card-title", "h4");
   h2.textContent = "Посты";
@@ -57,12 +56,10 @@ const renderPosts = (content, posts) => {
 
   content.forEach((element) => {
     const { posts } = element;
-    console.log(posts);
 
     posts.forEach((post) => {
-      console.log(post);
-      const { title, link, idFeed, description } = post;
-
+      const { title, link, id, read } = post;
+    
       const li = document.createElement("li");
       li.classList.add(
         "list-group-item",
@@ -77,15 +74,19 @@ const renderPosts = (content, posts) => {
       a.textContent = title;
       a.href = link;
       a.classList.add("fw-bold");
-      a.dataset.id = idFeed;
+      a.dataset.id = id;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
+      if(read){
+        a.classList.remove('fw-bold')
+        a.classList.add('fw-normal')
+      }
 
       const button = document.createElement("button");
       button.type = "button";
       button.classList.add("btn", "btn-outline-primary", "btn-sm");
       button.textContent = "Просмотр";
-      button.dataset.id = idFeed;
+      button.dataset.id = id;
       button.dataset.bsToggle = "modal";
       button.dataset.bsTarget = "#modal";
 
