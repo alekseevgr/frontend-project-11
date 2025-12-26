@@ -7,13 +7,14 @@ import buildPath from "./buildPath";
 import parseXML from "./parseXML";
 import render from "./renderFeeds";
 
-await i18next.init({
+const initI18n = async() => {await i18next.init({
   lng: "ru",
   resources: {
     ru: { translation: await import("/locales/ru/translation.json") },
     en: { translation: await import("/locales/en/translation.json") },
   },
 });
+}
 
 yup.setLocale({
   mixed: {
@@ -70,7 +71,8 @@ function updateTexts() {
 
 updateTexts();
 
-export default function app() {
+export default async function app() {
+  await initI18n();
   const form = document.querySelector(".rss-form");
   const input = document.querySelector("#url-input");
 
