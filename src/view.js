@@ -95,6 +95,7 @@ export default async function app() {
         if (!existingFeed) {
           parsedFeed.url = url;
           state.content.push(parsedFeed);
+          state.websites.push(url);
         } else if (newPosts.length > 0) {
           existingFeed.posts.unshift(...newPosts);
         }
@@ -102,7 +103,6 @@ export default async function app() {
         elements.feeds.innerHTML = "";
         elements.posts.innerHTML = "";
         render(state, elements.feeds, elements.posts);
-        state.websites.push(url);
         input.value = "";
         state.formState = "success";
       })
