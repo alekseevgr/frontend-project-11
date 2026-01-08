@@ -13,7 +13,8 @@ export default function parseXML(xml) {
   const channel = doc.querySelector("channel");
 
   if(!channel){
-    throw new Error('в RSS нет тега channel')
+    console.log('')
+    throw new Error("Ошибка парсинга XML")
   }
   const titleFeed = channel.querySelector("title")?.textContent ?? "";
   const descFeed = channel.querySelector("description")?.textContent ?? "";

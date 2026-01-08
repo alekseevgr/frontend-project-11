@@ -70,15 +70,15 @@ function updateTexts() {
   elements.button.textContent = i18next.t("form.submit");
 }
 
-updateTexts();
-
 export default async function app() {
   await initI18n();
+  updateTexts();
   const form = document.querySelector(".rss-form");
   const input = document.querySelector("#url-input");
 
   const updateRss = (url) => {
     const path = buildPath(url);
+    let isRetry = true;
     axios
       .get(path)
       .then((response) => {
@@ -104,8 +104,9 @@ export default async function app() {
         elements.feeds.innerHTML = "";
         elements.posts.innerHTML = "";
         render(state, elements.feeds, elements.posts);
-        input.value = "";
+        input.value = ''
         state.formState = "success";
+        isRetry = true;
       })
       .catch((err) => {
         if (err.message === "Ошибка парсинга XML") {
@@ -113,6 +114,7 @@ export default async function app() {
             website: { message: i18next.t("form.errors.invalidRss") },
           };
           state.formState = "invalid";
+          isRetry = false;
           return;
         }
         if (err.response && err.response.status === 404) {
@@ -120,15 +122,17 @@ export default async function app() {
             website: { message: i18next.t("form.errors.notFound") },
           };
           state.formState = "invalid";
+          isRetry = false;
           return;
         }
         state.errors = {
           website: { message: i18next.t("form.errors.network") },
         };
         state.formState = "invalid";
+        isRetry = true
       })
       .finally(() => {
-        if (state.formState !== "invalid" || !state.errors.website?.message) {
+        if (isRetry) {
           setTimeout(() => updateRss(url), 5000);
         }
       });
@@ -139,12 +143,12 @@ export default async function app() {
     const textError = snap.errors.website?.message ?? null;
     if (textError) {
       elements.error.textContent = textError;
+      elements.error.classList.remove("text-success");
       elements.error.classList.add("text-danger");
-      elements.error.classList.add("text-success");
+
       elements.input.classList.add("is-invalid");
     } else if (snap.formState === "success") {
-      elements.error.textContent = elements.error.textContent =
-        i18next.t("form.success");
+      elements.error.textContent = i18next.t("form.success");
       elements.error.classList.remove("text-danger");
       elements.error.classList.add("text-success");
       elements.input.classList.remove("is-invalid");
@@ -185,6 +189,12 @@ export default async function app() {
     if (!post) return;
 
     post.read = true;
+
+    const link = elements.posts.querySelector(`a[data-id="${postId}"]`);
+    if (link) {
+      link.classList.remove("fw-bold");
+      link.classList.add("fw-normal");
+    }
 
     document.querySelector(".modal-title").textContent = post.title;
     document.querySelector(".modal-body").textContent = post.description;
