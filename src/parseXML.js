@@ -11,6 +11,10 @@ export default function parseXML(xml) {
   }
 
   const channel = doc.querySelector("channel");
+
+  if(!channel){
+    throw new Error('в RSS нет тега channel')
+  }
   const titleFeed = channel.querySelector("title")?.textContent ?? "";
   const descFeed = channel.querySelector("description")?.textContent ?? "";
 
@@ -24,9 +28,9 @@ export default function parseXML(xml) {
   const items = doc.querySelectorAll("item");
 
   items.forEach((item) => {
-    const title = item.querySelector("title").textContent;
-    const link = item.querySelector("link").textContent;
-    const description = item.querySelector("description").textContent;
+    const title = item.querySelector("title")?.textContent ?? "";
+    const link = item.querySelector("link")?.textContent ?? "";
+    const description = item.querySelector("description")?.textContent ?? "";
     const id = feed.id
     const postId = uniqueId()
     const post = {

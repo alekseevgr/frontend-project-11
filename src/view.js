@@ -7,14 +7,15 @@ import buildPath from "./buildPath";
 import parseXML from "./parseXML";
 import render from "./renderFeeds";
 
-const initI18n = async() => {await i18next.init({
-  lng: "ru",
-  resources: {
-    ru: { translation: await import("/locales/ru/translation.json") },
-    en: { translation: await import("/locales/en/translation.json") },
-  },
-});
-}
+const initI18n = async () => {
+  await i18next.init({
+    lng: "ru",
+    resources: {
+      ru: { translation: await import("/locales/ru/translation.json") },
+      en: { translation: await import("/locales/en/translation.json") },
+    },
+  });
+};
 
 yup.setLocale({
   mixed: {
@@ -106,9 +107,30 @@ export default async function app() {
         input.value = "";
         state.formState = "success";
       })
-      .catch(console.error)
+      .catch((err) => {
+        if (err.message === "Ошибка парсинга XML") {
+          state.errors = {
+            website: { message: i18next.t("form.errors.invalidRss") },
+          };
+          state.formState = "invalid";
+          return;
+        }
+        if (err.response && err.response.status === 404) {
+          state.errors = {
+            website: { message: i18next.t("form.errors.notFound") },
+          };
+          state.formState = "invalid";
+          return;
+        }
+        state.errors = {
+          website: { message: i18next.t("form.errors.network") },
+        };
+        state.formState = "invalid";
+      })
       .finally(() => {
-        setTimeout(() => updateRss(url), 5000);
+        if (state.formState !== "invalid" || !state.errors.website?.message) {
+          setTimeout(() => updateRss(url), 5000);
+        }
       });
   };
 

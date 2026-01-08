@@ -7,7 +7,10 @@
     "errors": {
       "required": "Field is required",
       "url": "Enter a valid URL",
-      "notUnique": "This site has already been added"
+      "notUnique": "This site has already been added",
+      "network": "Network error. Check your connection.",
+      "notFound": "RSS not found (404).",
+      "invalidRss": "Invalid RSS."
     }
   }
 }
