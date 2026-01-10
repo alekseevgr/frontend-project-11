@@ -120,7 +120,7 @@ export default async function app() {
           isRetry = false;
           return;
         }
-        if (err.response && err.response.status === 404) {
+        if (err.response?.status === 404) {
           state.errors = {
             website: { message: i18next.t("form.errors.notFound") },
           };
