@@ -11,8 +11,8 @@ const initI18n = async () => {
   await i18next.init({
     lng: "ru",
     resources: {
-      ru: { translation: await import("/locales/ru/translation.json") },
-      en: { translation: await import("/locales/en/translation.json") },
+      ru: { translation: await import("../locales/ru/translation.json") },
+      en: { translation: await import("../locales/en/translation.json") },
     },
   });
 };
@@ -75,6 +75,9 @@ export default async function app() {
   updateTexts();
   const form = document.querySelector(".rss-form");
   const input = document.querySelector("#url-input");
+
+  const defaultLang = navigator.language.startsWith("en") ? "en" : "ru";
+  await i18next.changeLanguage(defaultLang);
 
   const updateRss = (url) => {
     const path = buildPath(url);
