@@ -10,7 +10,7 @@
       "notUnique": "RSS already exists",
       "network": "Network error. Check your connection.",
       "notFound": "RSS not found (404).",
-      "invalidRss": "Invalid RSS."
+      "invalidRss": "The resource does not contain valid RSS"
     }
   }
 }
