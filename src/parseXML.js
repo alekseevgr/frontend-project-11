@@ -1,6 +1,6 @@
 import uniqueId from 'lodash/uniqueId'
 
-export default function parseXML(xml) {
+export default function parseXML (xml) {
   const parser = new DOMParser()
 
   const doc = parser.parseFromString(

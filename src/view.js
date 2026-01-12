@@ -7,7 +7,7 @@ import buildPath from './buildPath'
 import parseXML from './parseXML'
 import render from './renderFeeds'
 
-const initI18n = async() => {
+const initI18n = async () => {
   await i18next.init({
     lng: 'ru',
     resources: {
@@ -26,7 +26,7 @@ yup.setLocale({
   },
 })
 
-const makeSchema = (state) => yup.object({
+const makeSchema = state => yup.object({
   website: yup
     .string()
     .url()
@@ -34,7 +34,7 @@ const makeSchema = (state) => yup.object({
     .test(
       'unique',
       () => i18next.t('form.errors.notUnique'),
-      (value) => !state.websites.includes(value),
+      value => !state.websites.includes(value),
     ),
 })
 
@@ -52,7 +52,8 @@ const validate = (fields, state) => {
       { abortEarly: false },
     )
     return {}
-  } catch(e) {
+  }
+  catch (e) {
     return keyBy(
       e.inner,
       'path',
@@ -69,13 +70,13 @@ const elements = {
   posts: document.querySelector('.posts'),
 }
 
-function updateTexts() {
+function updateTexts () {
   elements.label.textContent = i18next.t('form.label')
   elements.input.placeholder = i18next.t('form.placeholder')
   elements.button.textContent = i18next.t('form.submit')
 }
 
-export default async function app() {
+export default async function app () {
   await initI18n()
   updateTexts()
   const form = document.querySelector('.rss-form')
@@ -95,19 +96,20 @@ export default async function app() {
         const contents = response.data.contents
         const parsedFeed = parseXML(contents)
 
-        const existingFeed = state.content.find((f) => f.url === url)
+        const existingFeed = state.content.find(f => f.url === url)
 
         const newPosts = parsedFeed.posts.filter((post) => {
           if (!existingFeed) return true
 
-          return !existingFeed.posts.some((p) => p.link === post.link)
+          return !existingFeed.posts.some(p => p.link === post.link)
         })
 
         if (!existingFeed) {
           parsedFeed.url = url
           state.content.push(parsedFeed)
           state.websites.push(url)
-        } else if (newPosts.length > 0) {
+        }
+        else if (newPosts.length > 0) {
           existingFeed.posts.unshift(...newPosts)
         }
 
@@ -166,12 +168,14 @@ export default async function app() {
         elements.error.classList.add('text-danger')
 
         elements.input.classList.add('is-invalid')
-      } else if (snap.formState === 'success') {
+      }
+      else if (snap.formState === 'success') {
         elements.error.textContent = i18next.t('form.success')
         elements.error.classList.remove('text-danger')
         elements.error.classList.add('text-success')
         elements.input.classList.remove('is-invalid')
-      } else {
+      }
+      else {
         elements.error.textContent = ''
         elements.error.classList.remove(
           'text-danger',
@@ -204,7 +208,8 @@ export default async function app() {
       if (Object.keys(errors).length === 0) {
         state.formState = 'sending'
         updateRss(url)
-      } else {
+      }
+      else {
         state.formState = 'invalid'
       }
     },
@@ -217,8 +222,8 @@ export default async function app() {
 
       const postId = e.target.dataset.id
       const post = state.content
-        .flatMap((f) => f.posts)
-        .find((p) => p.id === postId)
+        .flatMap(f => f.posts)
+        .find(p => p.id === postId)
 
       if (!post) return
 

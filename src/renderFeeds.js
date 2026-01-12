@@ -137,7 +137,7 @@ const renderPosts = (content, posts) => {
   posts.append(cardPosts)
 }
 
-export default function render(state, feeds, posts) {
+export default function render (state, feeds, posts) {
   const { content } = state
 
   renderFeeds(
