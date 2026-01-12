@@ -1,4 +1,5 @@
 const renderFeeds = (content, feeds) => {
+
   const cardFeeds = document.createElement('div')
   cardFeeds.classList.add(
     'card',
@@ -25,7 +26,8 @@ const renderFeeds = (content, feeds) => {
   )
   cardFeeds.append(ul)
 
-  content.forEach(element => {
+  content.forEach((element) => {
+
     const { titleFeed, descFeed, id } = element
 
     const li = document.createElement('li')
@@ -54,12 +56,15 @@ const renderFeeds = (content, feeds) => {
     li.append(p)
 
     ul.append(li)
+
   })
 
   feeds.append(cardFeeds)
+
 }
 
 const renderPosts = (content, posts) => {
+
   const cardPosts = document.createElement('div')
   cardPosts.classList.add(
     'card',
@@ -85,10 +90,12 @@ const renderPosts = (content, posts) => {
   )
   cardPosts.append(ul)
 
-  content.forEach(element => {
+  content.forEach((element) => {
+
     const { posts } = element
 
-    posts.forEach(post => {
+    posts.forEach((post) => {
+
       const { title, link, id, read } = post
 
       const li = document.createElement('li')
@@ -109,8 +116,10 @@ const renderPosts = (content, posts) => {
       a.target = '_blank'
       a.rel = 'noopener noreferrer'
       if (read) {
+
         a.classList.remove('fw-bold')
         a.classList.add('fw-normal')
+
       }
 
       const button = document.createElement('button')
@@ -131,13 +140,17 @@ const renderPosts = (content, posts) => {
       )
 
       ul.append(li)
+
     })
+
   })
 
   posts.append(cardPosts)
+
 }
 
-export default function render(state, feeds, posts) {
+export default function render (state, feeds, posts) {
+
   const { content } = state
 
   renderFeeds(
@@ -150,4 +163,5 @@ export default function render(state, feeds, posts) {
   )
 
   return 1
+
 }
