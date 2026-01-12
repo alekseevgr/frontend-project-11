@@ -1,7 +1,6 @@
 import uniqueId from 'lodash/uniqueId'
 
-export default function parseXML(xml) {
-
+export default function parseXML (xml) {
   const parser = new DOMParser()
 
   const doc = parser.parseFromString(
@@ -11,18 +10,14 @@ export default function parseXML(xml) {
 
   const errorNode = doc.querySelector('parsererror')
   if (errorNode) {
-
     throw new Error('Ошибка парсинга XML')
-
   }
 
   const channel = doc.querySelector('channel')
 
   if (!channel) {
-
     console.log('')
     throw new Error('Ошибка парсинга XML')
-
   }
   const titleFeed = channel.querySelector('title')?.textContent ?? ''
   const descFeed = channel.querySelector('description')?.textContent ?? ''
@@ -30,14 +25,13 @@ export default function parseXML(xml) {
   const feed = {
     titleFeed,
     descFeed,
-    'id': uniqueId(),
-    'posts': [],
+    id: uniqueId(),
+    posts: [],
   }
 
   const items = doc.querySelectorAll('item')
 
-  items.forEach(item => {
-
+  items.forEach((item) => {
     const title = item.querySelector('title')?.textContent ?? ''
     const link = item.querySelector('link')?.textContent ?? ''
     const description = item.querySelector('description')?.textContent ?? ''
@@ -47,15 +41,13 @@ export default function parseXML(xml) {
       title,
       link,
       description,
-      'id': postId,
-      'idFeed': id,
-      'read': false,
+      id: postId,
+      idFeed: id,
+      read: false,
     }
 
     feed.posts.push(post)
-
   })
 
   return feed
-
 }
