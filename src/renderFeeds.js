@@ -25,7 +25,7 @@ const renderFeeds = (content, feeds) => {
   )
   cardFeeds.append(ul)
 
-  content.forEach((element) => {
+  content.forEach(element => {
     const { titleFeed, descFeed, id } = element
 
     const li = document.createElement('li')
@@ -85,10 +85,10 @@ const renderPosts = (content, posts) => {
   )
   cardPosts.append(ul)
 
-  content.forEach((element) => {
+  content.forEach(element => {
     const { posts } = element
 
-    posts.forEach((post) => {
+    posts.forEach(post => {
       const { title, link, id, read } = post
 
       const li = document.createElement('li')
@@ -137,7 +137,7 @@ const renderPosts = (content, posts) => {
   posts.append(cardPosts)
 }
 
-export default function render (state, feeds, posts) {
+export default function render(state, feeds, posts) {
   const { content } = state
 
   renderFeeds(
