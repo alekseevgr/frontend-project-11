@@ -12,9 +12,7 @@ export default defineConfig([
     rules: {
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/semi': ['error', 'never'],
-      '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/brace-style': ['error', 'stroustrup'],
-      '@stylistic/space-before-function-paren': ['error', 'always'],
       '@stylistic/indent': ['error', 2],
     },
   },
