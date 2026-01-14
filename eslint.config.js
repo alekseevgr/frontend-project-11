@@ -1,17 +1,20 @@
-import js from "@eslint/js";
-import globals from "globals";
-import prettierConfig from "eslint-config-prettier";
-import prettier from "eslint-plugin-prettier";
-import { defineConfig } from "eslint/config";
+import js from '@eslint/js'
+import globals from 'globals'
+import stylistic from '@stylistic/eslint-plugin'
+import { defineConfig } from 'eslint/config'
 
 export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    extends: [js.configs.recommended, prettierConfig],
-    plugins: { prettier },
+    files: ['**/*.{js,mjs,cjs}'],
+    extends: [js.configs.recommended],
+    plugins: { '@stylistic': stylistic },
     languageOptions: { globals: globals.browser },
     rules: {
-      "prettier/prettier": "error",
+      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/semi': ['error', 'never'],
+      '@stylistic/arrow-parens': ['error', 'as-needed'],
+      '@stylistic/brace-style': ['error', 'stroustrup'],
+      '@stylistic/space-before-function-paren': ['error', 'never'],
     },
   },
-]);
+])
