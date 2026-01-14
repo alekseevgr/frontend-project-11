@@ -28,7 +28,7 @@ export default function parseXML(xml) {
 
   const items = doc.querySelectorAll('item')
 
-  items.forEach(item => {
+  items.forEach((item) => {
     const title = item.querySelector('title')?.textContent ?? ''
     const link = item.querySelector('link')?.textContent ?? ''
     const description = item.querySelector('description')?.textContent ?? ''

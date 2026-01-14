@@ -15,7 +15,7 @@ const renderFeeds = (content, feeds) => {
   ul.classList.add('list-group', 'border-0', 'rounded-0')
   cardFeeds.append(ul)
 
-  content.forEach(element => {
+  content.forEach((element) => {
     const { titleFeed, descFeed, id } = element
 
     const li = document.createElement('li')
@@ -54,10 +54,10 @@ const renderPosts = (content, posts) => {
   ul.classList.add('list-group', 'border-0', 'rounded-0')
   cardPosts.append(ul)
 
-  content.forEach(element => {
+  content.forEach((element) => {
     const { posts } = element
 
-    posts.forEach(post => {
+    posts.forEach((post) => {
       const { title, link, id, read } = post
 
       const li = document.createElement('li')

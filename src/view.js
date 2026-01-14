@@ -7,7 +7,7 @@ import buildPath from './buildPath'
 import parseXML from './parseXML'
 import render from './renderFeeds'
 
-const initI18n = async() => {
+const initI18n = async () => {
   await i18next.init({
     lng: 'ru',
     resources: {
@@ -80,21 +80,21 @@ export default async function app() {
   const defaultLang = navigator.language.startsWith('en') ? 'en' : 'ru'
   await i18next.changeLanguage(defaultLang)
 
-  const updateRss = url => {
+  const updateRss = (url) => {
     const path = buildPath(url)
     let isRetry = true
     axios
       .get(path)
-      .then(response => {
+      .then((response) => {
         const contents = response.data.contents
         const parsedFeed = parseXML(contents)
 
         const existingFeed = state.content.find(f => f.url === url)
 
-        const newPosts = parsedFeed.posts.filter(post => {
+        const newPosts = parsedFeed.posts.filter((post) => {
           if (!existingFeed) return true
 
-          return !existingFeed.posts.some(p => p.link === post.link)
+          return !existingFeed.posts.some((p) => p.link === post.link)
         })
 
         if (!existingFeed) {
@@ -113,7 +113,7 @@ export default async function app() {
         state.formState = 'success'
         isRetry = true
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.message === 'Ошибка парсинга XML') {
           state.errors = {
             website: { message: i18next.t('form.errors.invalidRss') },
@@ -169,7 +169,7 @@ export default async function app() {
 
   i18next.on('languageChanged', updateTexts)
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault()
     const data = new FormData(e.target)
     const url = data.get('url')
@@ -186,13 +186,13 @@ export default async function app() {
     }
   })
 
-  elements.posts.addEventListener('click', e => {
+  elements.posts.addEventListener('click', (e) => {
     if (!e.target.matches('button')) return
 
     const postId = e.target.dataset.id
     const post = state.content
-      .flatMap(f => f.posts)
-      .find(p => p.id === postId)
+      .flatMap((f) => f.posts)
+      .find((p) => p.id === postId)
 
     if (!post) return
 
