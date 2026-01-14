@@ -7,7 +7,7 @@ import buildPath from './buildPath'
 import parseXML from './parseXML'
 import render from './renderFeeds'
 
-const initI18n = async() => {
+const initI18n = async () => {
   await i18next.init({
     lng: 'ru',
     resources: {
@@ -26,7 +26,7 @@ yup.setLocale({
   },
 })
 
-const makeSchema = state =>
+const makeSchema = (state) =>
   yup.object({
     website: yup
       .string()
@@ -35,7 +35,7 @@ const makeSchema = state =>
       .test(
         'unique',
         () => i18next.t('form.errors.notUnique'),
-        value => !state.websites.includes(value),
+        (value) => !state.websites.includes(value),
       ),
   })
 
@@ -51,7 +51,7 @@ const validate = (fields, state) => {
     makeSchema(state).validateSync(fields, { abortEarly: false })
     return {}
   }
- catch(e) {
+  catch (e) {
     return keyBy(e.inner, 'path')
   }
 }
@@ -65,13 +65,13 @@ const elements = {
   posts: document.querySelector('.posts'),
 }
 
-function updateTexts() {
+function updateTexts () {
   elements.label.textContent = i18next.t('form.label')
   elements.input.placeholder = i18next.t('form.placeholder')
   elements.button.textContent = i18next.t('form.submit')
 }
 
-export default async function app() {
+export default async function app () {
   await initI18n()
   updateTexts()
   const form = document.querySelector('.rss-form')
@@ -80,21 +80,21 @@ export default async function app() {
   const defaultLang = navigator.language.startsWith('en') ? 'en' : 'ru'
   await i18next.changeLanguage(defaultLang)
 
-  const updateRss = url => {
+  const updateRss = (url) => {
     const path = buildPath(url)
     let isRetry = true
     axios
       .get(path)
-      .then(response => {
+      .then((response) => {
         const contents = response.data.contents
         const parsedFeed = parseXML(contents)
 
-        const existingFeed = state.content.find(f => f.url === url)
+        const existingFeed = state.content.find((f) => f.url === url)
 
-        const newPosts = parsedFeed.posts.filter(post => {
+        const newPosts = parsedFeed.posts.filter((post) => {
           if (!existingFeed) return true
 
-          return !existingFeed.posts.some(p => p.link === post.link)
+          return !existingFeed.posts.some((p) => p.link === post.link)
         })
 
         if (!existingFeed) {
@@ -102,7 +102,7 @@ export default async function app() {
           state.content.push(parsedFeed)
           state.websites.push(url)
         }
- else if (newPosts.length > 0) {
+        else if (newPosts.length > 0) {
           existingFeed.posts.unshift(...newPosts)
         }
 
@@ -113,7 +113,7 @@ export default async function app() {
         state.formState = 'success'
         isRetry = true
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.message === 'Ошибка парсинга XML') {
           state.errors = {
             website: { message: i18next.t('form.errors.invalidRss') },
@@ -153,13 +153,13 @@ export default async function app() {
 
       elements.input.classList.add('is-invalid')
     }
- else if (snap.formState === 'success') {
+    else if (snap.formState === 'success') {
       elements.error.textContent = i18next.t('form.success')
       elements.error.classList.remove('text-danger')
       elements.error.classList.add('text-success')
       elements.input.classList.remove('is-invalid')
     }
- else {
+    else {
       elements.error.textContent = ''
       elements.error.classList.remove('text-danger', 'text-success')
       elements.input.classList.remove('is-invalid')
@@ -169,7 +169,7 @@ export default async function app() {
 
   i18next.on('languageChanged', updateTexts)
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault()
     const data = new FormData(e.target)
     const url = data.get('url')
@@ -181,18 +181,18 @@ export default async function app() {
       state.formState = 'sending'
       updateRss(url)
     }
- else {
+    else {
       state.formState = 'invalid'
     }
   })
 
-  elements.posts.addEventListener('click', e => {
+  elements.posts.addEventListener('click', (e) => {
     if (!e.target.matches('button')) return
 
     const postId = e.target.dataset.id
     const post = state.content
-      .flatMap(f => f.posts)
-      .find(p => p.id === postId)
+      .flatMap((f) => f.posts)
+      .find((p) => p.id === postId)
 
     if (!post) return
 
