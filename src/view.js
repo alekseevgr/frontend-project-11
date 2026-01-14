@@ -94,7 +94,7 @@ export default async function app() {
         const newPosts = parsedFeed.posts.filter((post) => {
           if (!existingFeed) return true
 
-          return !existingFeed.posts.some((p) => p.link === post.link)
+          return !existingFeed.posts.some(p => p.link === post.link)
         })
 
         if (!existingFeed) {
@@ -191,8 +191,8 @@ export default async function app() {
 
     const postId = e.target.dataset.id
     const post = state.content
-      .flatMap((f) => f.posts)
-      .find((p) => p.id === postId)
+      .flatMap(f => f.posts)
+      .find(p => p.id === postId)
 
     if (!post) return
 
