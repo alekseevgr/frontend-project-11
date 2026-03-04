@@ -105,6 +105,7 @@ export default async function app() {
     if (link) {
       link.classList.remove('fw-bold')
       link.classList.add('fw-normal')
+      link.classList.add('link-secondary')
     }
 
     document.querySelector('.modal-title').textContent = post.title

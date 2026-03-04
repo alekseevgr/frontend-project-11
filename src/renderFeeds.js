@@ -80,6 +80,7 @@ const renderPosts = (content, posts) => {
       if (read) {
         a.classList.remove('fw-bold')
         a.classList.add('fw-normal')
+        a.classList.add('link-secondary')
       }
 
       const button = document.createElement('button')
