@@ -12,12 +12,12 @@ const updateRss = (url, state, elements, input) => {
     .then((response) => {
       const contents = response.data.contents
       const parsedFeed = parseXML(contents)
-      const existingFeed = state.content.find((f) => f.url === url)
+      const existingFeed = state.content.find(f => f.url === url)
 
       const newPosts = parsedFeed.posts.filter((post) => {
         if (!existingFeed) return true
 
-        return !existingFeed.posts.some((p) => p.link === post.link)
+        return !existingFeed.posts.some(p => p.link === post.link)
       })
 
       if (!existingFeed) {

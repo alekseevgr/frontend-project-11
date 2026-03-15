@@ -94,8 +94,8 @@ export default async function app() {
 
     const postId = e.target.dataset.id
     const post = state.content
-      .flatMap((f) => f.posts)
-      .find((p) => p.id === postId)
+      .flatMap(f => f.posts)
+      .find(p => p.id === postId)
 
     if (!post) return
 

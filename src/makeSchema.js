@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import i18next from 'i18next'
 
-const makeSchema = (state) =>
+const makeSchema = state =>
   yup.object({
     website: yup
       .string()
@@ -10,7 +10,7 @@ const makeSchema = (state) =>
       .test(
         'unique',
         () => i18next.t('form.errors.notUnique'),
-        (value) => !state.websites.includes(value),
+        value => !state.websites.includes(value),
       ),
   })
 
